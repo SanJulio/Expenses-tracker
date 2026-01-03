@@ -1,0 +1,57 @@
+expenses = []
+
+while True:
+    print("\n=== Expense Tracker ===")
+    print("1. Add Expense")
+    print("2. View all expenses")
+    print("3. View totals")
+    print("4. Quit")
+
+    choice = input("Choose an option: (1-4): ").strip()
+
+    if choice == '4':
+        print("Goodbye!")
+        break
+
+    elif choice == "1":
+        name = input("Expense name (e.g. coffee): ").strip()
+        amount = float(input("Amount (e.g. 3.50): ").strip())
+        category = input("Category (e.g. food, travel): ").strip().lower()
+
+        expense = {"name": name, "amount": amount, "category": category}
+        expenses.append(expense)
+
+        print(f"Added: {name} - £{amount} ({category})")
+
+    elif choice == "2":
+        if not expenses:
+            print("No expenses recorded.")
+        else:
+            print("\nAll expenses:")
+            for i, exp in enumerate(expenses, start=1):
+                print(f"{i}. {exp['name']} - £{exp['amount']} ({exp['category']})")
+
+    elif choice == "3":
+        if not expenses:
+            print("No expenses recorded yet.")
+        else:
+            total = 0
+            totals_by_category = {}
+
+            for exp in expenses:
+                total += exp["amount"]
+
+                cat = exp["category"]
+                if cat in totals_by_category:
+                    totals_by_category[cat] += exp["amount"]
+                else:
+                    totals_by_category[cat] = exp["amount"]
+
+            print(f"\nTotal expenses: £{total}")
+
+            print("By category:")
+            for cat, amt in totals_by_category.items():
+                print(f"- {cat}: £{amt}")
+
+    else:
+        print("Invalid choice. Please select 1-4.")
